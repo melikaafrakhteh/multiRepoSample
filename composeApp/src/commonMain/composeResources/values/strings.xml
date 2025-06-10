@@ -1,0 +1,12 @@
+<resources>
+    <string name="tabReport">Report</string>
+    <string name="tabHomeEn">Home</string>
+    <string name="tabTransactionsEn">Transactions</string>
+    <string name="tabAccountEn">Account</string>
+
+    <string name="tabFacility">تسهیلات</string>
+    <string name="tabHome">خانه</string>
+    <string name="tabTransactions">تراکنش‌ها</string>
+    <string name="tabAccount">حساب</string>
+    <string name="youShouldUNeedMobileForUsePwa">برای استفاده از نسخه وب باید از موبایل استفاده کنید!</string>
+</resources>

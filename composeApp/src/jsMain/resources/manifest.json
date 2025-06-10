@@ -1,0 +1,17 @@
+{
+  "name": "Sepino Pwa",
+  "short_name": "Sepino1",
+  "description": "Saderat Digital Bank",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#00BFEE",
+  "theme_color": "#00BFEE",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
