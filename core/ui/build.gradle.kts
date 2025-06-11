@@ -14,6 +14,10 @@ android {
         minSdk = 21
         targetSdk = 35
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
 }
 
 kotlin {
@@ -21,7 +25,6 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-    wasmJs()
 
     sourceSets {
         getByName("commonMain").apply {
@@ -31,6 +34,7 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.material)
                 implementation(compose.components.resources)
+                implementation("org.jetbrains.compose.runtime:runtime:1.6.2")
 
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.androidx.lifecycle.runtime)

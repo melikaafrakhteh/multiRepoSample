@@ -2,15 +2,15 @@ package component.composeView.customButton
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -18,12 +18,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import component.composeView.customTextField.CustomTextField
-import component.composeView.otherViews.AnimatedBorderCard
-import composeProvider.Dimens
-import composeProvider.ProvideEverythingForPreview
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.VisualTransformation
 
+@Composable
+expect fun BorderPickerButton(
+    value: String?,
+    modifier: Modifier,
+    label: String?,
+    onClick: (() -> Unit)?,
+    enabled: Boolean,
+    isRequired: Boolean
+)
 
 @Composable
 internal fun CommonBorderPickerButton(
@@ -36,36 +42,34 @@ internal fun CommonBorderPickerButton(
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    val interactionSource = remember { MutableInteractionSource() }
+
+    LaunchedEffect(interactionSource) {
+        interactionSource.interactions.collect {
+            if (it is PressInteraction.Release) {
+                keyboardController?.hide()
+                if (enabled) {
+                    focusManager.clearFocus()
+                }
+                onClick?.invoke()
+            }
+        }
+    }
 
     OutlinedTextField(
+        value = value.orEmpty(),
+        onValueChange = {}, // readOnly field
         modifier = modifier
             .clip(MaterialTheme.shapes.medium),
-        interactionSource = remember { MutableInteractionSource() }
-            .also { interactionSource ->
-                LaunchedEffect(interactionSource) {
-                    interactionSource.interactions.collect {
-                        if (it is PressInteraction.Release) {
-                            keyboardController?.hide()
-                            if (enabled) {
-                                focusManager.clearFocus()
-                            }
-                            onClick?.invoke()
-                        }
-                    }
-                }
-            },
-        label = label,
-        isRequired = isRequired,
-        value = value,
         enabled = enabled,
         readOnly = true,
-        trailingIcon = {
-            Icon(
-                modifier = Modifier.size(Dimens.spaceLarge),
-                imageVector = Icons.Filled.ArrowDropDown,
-                contentDescription = null
-            )
+        textStyle = LocalTextStyle.current,
+        interactionSource = interactionSource,
+        label = {
+            if (label != null) Text(label)
         },
-        onValueChange = {}
+        singleLine = true,
+        shape = OutlinedTextFieldDefaults.shape,
+        colors = OutlinedTextFieldDefaults.colors()
     )
 }

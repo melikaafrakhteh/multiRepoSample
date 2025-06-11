@@ -20,6 +20,9 @@ android {
         targetSdk = 35
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
 }
 
 kotlin {
@@ -27,7 +30,7 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-    wasmJs()
+
 
     sourceSets {
         getByName("commonMain").apply {
@@ -37,8 +40,10 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.material)
                 implementation(compose.components.resources)
+                implementation("org.jetbrains.compose.runtime:runtime:1.6.2")
 
                 implementation(libs.androidx.navigation.compose)
+
 
                 implementation(project(":feature:charity"))
                 implementation(project(":feature:general"))
@@ -48,10 +53,6 @@ kotlin {
         }
 
         jsMain.dependencies {
-            implementation(compose.html.core)
-        }
-
-        wasmJsMain.dependencies {
             implementation(compose.html.core)
         }
     }

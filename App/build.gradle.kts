@@ -11,6 +11,11 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+}
+
 kotlin {
     androidTarget()
 
@@ -34,11 +39,8 @@ kotlin {
         androidMain{
             dependencies {
                 implementation(libs.androidx.core.ktx)
-                implementation(libs.androidx.activityCompose)
-                implementation(libs.androidx.compose.ui)
-                implementation(libs.androidx.compose.ui.tooling.preview)
-                implementation(libs.androidx.compose.material3)
                 implementation(libs.androidx.appcompat)
+                implementation("org.jetbrains.compose.runtime:runtime:1.6.2")
 
                 implementation(project(":composeApp"))
             }
@@ -58,13 +60,12 @@ android {
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14" // Match your Compose plugin version
     }
 
     packaging {
