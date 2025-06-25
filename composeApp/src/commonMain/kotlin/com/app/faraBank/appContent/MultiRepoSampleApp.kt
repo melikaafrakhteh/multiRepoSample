@@ -19,7 +19,7 @@ fun MultiRepoSampleApp(backPressHandler: BackPressHandler) {
     AppTheme {
         NavHost(
             navController = navController,
-            startDestination = CharityDestination
+            startDestination = CharityDestination.ROUTE
         ) {
             charityNavGraph(navController)
             generalNavGraph(Constants.MAHAK_CHARITY_URL)

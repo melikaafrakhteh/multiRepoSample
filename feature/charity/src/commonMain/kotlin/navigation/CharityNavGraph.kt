@@ -12,7 +12,7 @@ fun NavGraphBuilder.charityNavGraph(navController: NavController) {
     composable(Constants.CHARITY_TEXT) {
         CharityPage(
             onClickOpenWebView = {
-                navController.navigate(WebViewDestination::class)
+                navController.navigate(WebViewDestination.ROUTE)
             }
         )
     }

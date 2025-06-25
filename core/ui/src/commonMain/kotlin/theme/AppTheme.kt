@@ -8,9 +8,12 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
@@ -36,7 +39,30 @@ private val LightColorScheme = lightColorScheme(
 )
 
 
-val LocalThemeIsDark = compositionLocalOf { mutableStateOf(false) }
+private val LocalThemeIsDark = compositionLocalOf { mutableStateOf(false) }
+
+@Composable
+private fun ProvideTheme(
+    isDarkState: MutableState<Boolean>,
+    content: @Composable () -> Unit,
+) {
+    CompositionLocalProvider(LocalThemeIsDark provides isDarkState) {
+        content()
+    }
+}
+
+private val LocalAppDimens = staticCompositionLocalOf<Dimensions> {
+    error("No AppDimens provided")
+}
+
+@Composable
+private fun ProvideDimens(
+    content: @Composable () -> Unit,
+) {
+    CompositionLocalProvider(LocalAppDimens provides Dimensions()) {
+        content()
+    }
+}
 
 @Composable
 fun AppTheme(
@@ -44,19 +70,24 @@ fun AppTheme(
     content: @Composable () -> Unit
 ) {
     val isDarkState = remember(systemIsDark) { mutableStateOf(systemIsDark) }
-    CompositionLocalProvider(
-        LocalThemeIsDark provides isDarkState,
-    ) {
-        MaterialTheme(
-            colorScheme = if (systemIsDark) DarkColorScheme else LightColorScheme,
-            content = {
-                SystemAppearance(!isDarkState.value)
+    ProvideTheme(isDarkState) {
+        ProvideDimens {
+            MaterialTheme(
+                colorScheme = if (systemIsDark) DarkColorScheme else LightColorScheme,
+                content = {
+                    SystemAppearance(!isDarkState.value)
 
-                Surface(content = content)
-            }
-        )
+                    Surface(content = content)
+                }
+            )
+        }
     }
 }
+
+val Dimens: Dimensions
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalAppDimens.current
 
 @Composable
 internal expect fun SystemAppearance(isDark: Boolean)

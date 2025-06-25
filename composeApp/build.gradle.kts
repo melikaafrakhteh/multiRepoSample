@@ -1,8 +1,6 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -13,6 +11,8 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kspGradlePlugin)
 }
+
+apply(from = "../android-config.gradle")
 
 kotlin {
     androidTarget {
@@ -81,17 +81,4 @@ kotlin {
     }
 }
 
-android {
-    namespace = "org.company.app"
-    compileSdk = 35
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 35
-    }
-
-     /*composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
-    }*/
-}
-
+android.namespace = "org.company.app"

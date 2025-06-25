@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feature_charity_charity">نیکوکاری</string>
+    <string name="feature_charity_charity">با هم برای کودکان محک</string>
+    <string name="feature_charity_charity_description">هر کمک، یک امید برای آینده‌ای روشن‌تر</string>
     <string name="feature_charity_seeMahakCharity">مشاهده وب‌سایت محک</string>
-
 </resources>

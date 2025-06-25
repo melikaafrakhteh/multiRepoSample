@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kspGradlePlugin)
 }
 
+apply(from = "../android-config.gradle")
+
 kotlin {
     androidTarget()
     iosX64()
@@ -20,12 +22,5 @@ kotlin {
 
 android {
     namespace = "com.app.core.common"
-    compileSdk = 35
     buildFeatures.buildConfig = true
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 35
-    }
-
 }

@@ -22,6 +22,10 @@ espressoCore = "3.6.1"
 material = "1.12.0"
 materail3 = "1.3.2"
 
+compileSdk = "36"
+minSdk = "24"
+targetSdk = "36"
+
 [libraries]
 
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }

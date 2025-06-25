@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kspGradlePlugin)
 }
 
+apply(from = "../android-config.gradle")
+
 kotlin {
     androidTarget()
     iosX64()
@@ -17,12 +19,21 @@ kotlin {
         nodejs()
     }
 
+    js {
+        browser()
+        nodejs()
+    }
+
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.material)
+        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material3)
             implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.components.resources)
 
             implementation(libs.kotlinx.serialization.json)
@@ -32,16 +43,4 @@ kotlin {
 
 }
 
-android {
-    namespace = "com.app.core.ui"
-    compileSdk = 35
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 35
-    }
-
-    /*composeOptions {
-       kotlinCompilerExtensionVersion = "1.5.14"
-   }*/
-}
+android.namespace = "com.app.core.ui"
