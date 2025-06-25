@@ -1,23 +1,10 @@
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.kotlin.plugin.compose")
-    id("com.android.library")
-    id("org.jetbrains.kotlin.plugin.serialization")
-    id("com.google.devtools.ksp") version "2.1.21-2.0.1"
-}
-
-android {
-    namespace = "com.app.feature.general"
-    compileSdk = 35
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
-    }
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 35
-    }
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.androidGradleLibraryPlugin)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kspGradlePlugin)
 }
 
 kotlin {
@@ -25,15 +12,28 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
+    wasmJs {
+        browser()
+        nodejs()
+    }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.androidx.navigation.compose)
+        commonMain.dependencies {
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.androidx.lifecycle.runtime)
 
-                implementation(project(":core:common"))
-                implementation(project(":core:ui"))
-            }
+            implementation(project(":core:common"))
+            implementation(project(":core:ui"))
         }
+    }
+}
+
+android {
+    namespace = "com.app.feature.general"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 35
     }
 }

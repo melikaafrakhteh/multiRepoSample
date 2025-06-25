@@ -1,10 +1,21 @@
 plugins {
-    alias(libs.plugins.multiplatform)
-    alias(libs.plugins.compose)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.androidGradleLibraryPlugin)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kspGradlePlugin)
+}
+
+kotlin {
+    androidTarget()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+    wasmJs {
+        browser()
+        nodejs()
+    }
+
+    jvmToolchain(17)
 }
 
 android {
@@ -17,13 +28,4 @@ android {
         targetSdk = 35
     }
 
-}
-
-kotlin {
-    androidTarget()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    jvmToolchain(17)
 }
