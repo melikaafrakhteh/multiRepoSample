@@ -7,8 +7,6 @@ plugins {
     alias(libs.plugins.kspGradlePlugin)
 }
 
-apply(from = "../android-config.gradle")
-
 kotlin {
     androidTarget()
     iosX64()
@@ -19,10 +17,10 @@ kotlin {
         nodejs()
     }
 
-    js {
+   /* js { // toDO
         browser()
         nodejs()
-    }
+    }*/
 
     sourceSets {
         androidMain.dependencies {
@@ -43,4 +41,12 @@ kotlin {
 
 }
 
-android.namespace = "com.app.core.ui"
+android{
+    namespace = "com.app.core.ui"
+
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+    }
+}

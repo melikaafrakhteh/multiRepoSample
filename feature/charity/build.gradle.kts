@@ -7,8 +7,6 @@ plugins {
     alias(libs.plugins.kspGradlePlugin)
 }
 
-apply(from = "../android-config.gradle")
-
 kotlin {
     androidTarget()
     iosX64()
@@ -36,4 +34,12 @@ kotlin {
     }
 }
 
-android.namespace = "com.app.feature.charity"
+android{
+    namespace = "com.app.feature.charity"
+
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+    }
+}

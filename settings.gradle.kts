@@ -1,4 +1,5 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google()
@@ -12,7 +13,6 @@ pluginManagement {
         maven("https://androidx.dev/storage/compose-compiler/repository")
     }
 }
-
 
 dependencyResolutionManagement {
     repositories {

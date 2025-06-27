@@ -28,6 +28,7 @@ import extensions.withHttps
 actual fun WebViewContent(
     url: String,
     modifier: Modifier,
+    onLoadingStateChanged: (Boolean) -> Unit
 ) {
     var backEnabled by remember { mutableStateOf(false) }
     var webView: WebView? = null
@@ -50,11 +51,13 @@ actual fun WebViewContent(
                         url: String?,
                         favicon: Bitmap?
                     ) {
+                        onLoadingStateChanged(true)
                         webView?.alpha = 0f
                         backEnabled = view.canGoBack()
                     }
 
                     override fun onPageFinished(view: WebView?, url: String?) {
+                        onLoadingStateChanged(false)
                         webView?.alpha = 1f
                         super.onPageFinished(view, url)
                     }
@@ -65,6 +68,8 @@ actual fun WebViewContent(
                         handler: SslErrorHandler?,
                         error: SslError?
                     ) {
+                        onLoadingStateChanged(false)
+
                         if (handler != null) {
                             handler.proceed()
                         } else {

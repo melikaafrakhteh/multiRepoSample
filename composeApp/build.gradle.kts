@@ -12,8 +12,6 @@ plugins {
     alias(libs.plugins.kspGradlePlugin)
 }
 
-apply(from = "../android-config.gradle")
-
 kotlin {
     androidTarget {
         compilations.all {
@@ -81,4 +79,12 @@ kotlin {
     }
 }
 
-android.namespace = "org.company.app"
+android {
+    namespace = "org.company.app"
+
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+    }
+}
